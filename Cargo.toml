@@ -1,0 +1,105 @@
+[package]
+name = "oxide-wall"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.94.1"
+description = "Adaptive zero-trust security gateway with real-time endpoint protection — SQL firewall, SSRF guard, malware detection, process monitoring, network analysis, rootkit detection"
+
+
+[dependencies]
+# SQL parsing for injection detection (AST-level analysis, not regex)
+sqlparser = "0.41"
+
+# Cryptographic hashing for audit chain + fingerprinting
+sha2 = "0.10"
+hex = "0.4"
+
+# Fast synchronization (no lock poisoning)
+parking_lot = "0.12"
+
+# URL parsing for SSRF guard
+url = "2"
+
+# Credential encryption (AES-256-GCM)
+aes-gcm = "0.10"
+rand = "0.8"
+base64 = "0.22"
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Time handling
+chrono = { version = "0.4", features = ["serde"] }
+
+# Unique IDs
+uuid = { version = "1", features = ["v4"] }
+
+# Async runtime
+tokio = { version = "1", features = ["full"] }
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+
+# Error handling
+thiserror = "2"
+
+# Web framework
+axum = "0.7"
+
+# HTTP client for reverse proxy
+hyper = { version = "1", features = ["full"] }
+hyper-util = { version = "0.1", features = ["client-legacy", "tokio"] }
+http-body-util = "0.1"
+tower = { version = "0.5", features = ["util"] }
+
+# Config file
+toml = "0.8"
+# Lossless TOML edits (preserves comments + formatting) — used to persist
+# runtime allowlist additions from the ticker back into config.toml.
+toml_edit = "0.22"
+
+# CLI
+clap = { version = "4", features = ["derive"] }
+
+# Endpoint protection: filesystem monitoring (inotify on Linux)
+notify = "7"
+
+# Endpoint protection: /proc process info
+sysinfo = "0.30"
+
+# Endpoint protection: async trait for Scanner interface
+async-trait = "0.1"
+
+# Endpoint protection: signal handling (kill processes)
+nix = { version = "0.29", features = ["signal", "process", "user"] }
+
+# Endpoint protection: libc for system calls (getuid, etc)
+libc = "0.2"
+
+# Endpoint protection: glob pattern matching for allowlists
+glob = "0.3"
+
+# Endpoint protection: regex for pattern detection
+regex = "1"
+
+# TLS support
+axum-server = { version = "0.7", features = ["tls-rustls"] }
+rustls = "0.23"
+rustls-pemfile = "2"
+
+# SSE real-time event streaming
+async-stream = "0.3"
+tokio-stream = "0.1"
+futures = "0.3"
+
+# Testing: temporary files
+tempfile = "3"
+
+# security-ticker desktop widget
+eframe = { version = "0.29", default-features = false, features = ["glow", "default_fonts"], optional = true }
+egui = { version = "0.29", optional = true }
+reqwest = { version = "0.12", features = ["json"], optional = true }
+
+[dev-dependencies]

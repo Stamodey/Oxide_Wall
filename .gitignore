@@ -1,0 +1,16 @@
+target/
+widget/
+*.png
+*.lock
+*.log
+*.tmp
+*.bak
+*.swp
+*.DS_Store
+.idea/
+.vscode/
+*.iml
+*.class
+*.jar
+*.md
+/src/ML
